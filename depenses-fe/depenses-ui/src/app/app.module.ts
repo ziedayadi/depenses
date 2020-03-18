@@ -25,8 +25,7 @@ import {DashboardComponent} from './dashboard/dashboard.component';
     MatInputModule,
     FormsModule,
     BrowserAnimationsModule,
-    HttpClientModule
-
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

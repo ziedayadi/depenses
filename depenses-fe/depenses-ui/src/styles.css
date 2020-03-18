@@ -18,3 +18,7 @@
   border-color: #9b59b6;;
   box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
 }
+
+.global-font-style {
+  font-family: Roboto;
+}
