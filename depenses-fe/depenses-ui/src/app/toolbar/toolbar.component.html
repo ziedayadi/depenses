@@ -1,0 +1,6 @@
+<mat-toolbar class="tool-bar">
+  <div *ngIf="this.getUser()" class="col-12 d-flex p-2 flex-row-reverse">
+      <span> {{this.getUser().firstName }}</span>
+      <span class="text-uppercase">{{ this.getUser().lastName}} </span>
+  </div>
+</mat-toolbar>

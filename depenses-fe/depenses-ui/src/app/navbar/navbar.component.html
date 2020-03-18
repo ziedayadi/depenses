@@ -1,0 +1,48 @@
+<mat-sidenav-container fullscreen>
+  <mat-sidenav *ngIf="getConnectedUser()" [fixedBottomGap]=1 [fixedInViewport]="'false'"
+               [fixedTopGap]=0
+               class="side-nav-bar col-2 p-0 border-0"
+               mode="side"
+               opened>
+    <div class="app-name pt-3"><span class="font-weight-bold h3  ">S T O U C H I</span></div>
+    <div style="font-size: 18px">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link active" href="#">
+            <i class="fa fa-tachometer"></i>
+            <span> Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="fa fa-history"></i>
+            <span> Previous months</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="fa fa-cart-arrow-down"></i>
+            <span> Charges</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="fa fa-money "></i>
+            <span> Incomes</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="fa fa-lightbulb-o"></i>
+            <span> Plans</span></a>
+        </li>
+      </ul>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div>
+      <app-toolbar></app-toolbar>
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
