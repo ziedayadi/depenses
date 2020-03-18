@@ -13,6 +13,11 @@ import {DashboardComponent} from './dashboard/dashboard.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { NavbarComponent } from './navbar/navbar.component';
+import { PreviousMonthsComponent } from './previous-months/previous-months.component';
+import { ChargesComponent } from './charges/charges.component';
+import { IncomesComponent } from './incomes/incomes.component';
+import { PlansComponent } from './plans/plans.component';
+import {RouterModule} from '@angular/router';
 
 
 
@@ -22,10 +27,15 @@ import { NavbarComponent } from './navbar/navbar.component';
     LoginComponent,
     DashboardComponent,
     ToolbarComponent,
-    NavbarComponent
+    NavbarComponent,
+    PreviousMonthsComponent,
+    ChargesComponent,
+    IncomesComponent,
+    PlansComponent
   ],
   imports: [
     BrowserModule,
+    RouterModule,
     AppRoutingModule,
     MatToolbarModule,
     MatInputModule,
