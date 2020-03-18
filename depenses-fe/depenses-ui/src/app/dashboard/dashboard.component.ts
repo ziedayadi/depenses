@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {LoginService} from "../login/login.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-dashboard',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  constructor(private loginService : LoginService,
+              private router : Router) { }
 
   ngOnInit(): void {
+   if(! this.loginService.user){
+     this.router.navigateByUrl('/');
+   }
   }
 
 }

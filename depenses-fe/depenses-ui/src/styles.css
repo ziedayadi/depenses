@@ -1,14 +1,14 @@
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 
 .btn-primary {
-  background-color : #9b59b6;
-  border-color:#9b59b6 ;
+  background-color: #9b59b6;
+  border-color: #9b59b6;
   color: #ffffff;
 }
 
-.btn-primary:hover{
-  background-color : #9b59b6;
-  border-color:#9b59b6 ;
+.btn-primary:hover {
+  background-color: #9b59b6;
+  border-color: #9b59b6;
   color: #ffffff;
 }
 
@@ -21,4 +21,23 @@
 
 .global-font-style {
   font-family: Roboto;
+}
+
+
+.side-nav-bar {
+  background-color: #212529;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.tool-bar {
+  background-color: #343a40 !important;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+
+.app-name {
+  height: 64px !important;
+  background-color: #343a40 !important;
+  text-align: center;
+  padding-top: 3px;
 }

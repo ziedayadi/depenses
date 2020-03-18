@@ -10,13 +10,19 @@ import {FormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {HttpClientModule} from "@angular/common/http";
 import {DashboardComponent} from './dashboard/dashboard.component';
+import { ToolbarComponent } from './toolbar/toolbar.component';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import { NavbarComponent } from './navbar/navbar.component';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    ToolbarComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -26,6 +32,7 @@ import {DashboardComponent} from './dashboard/dashboard.component';
     FormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    MatSidenavModule
   ],
   providers: [],
   bootstrap: [AppComponent]
