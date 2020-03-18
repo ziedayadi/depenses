@@ -1,4 +1,4 @@
-package com.zay.depensesbe.dto.requests;
+package com.zay.depensesbe.dto.requests.users;
 
 
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package com.zay.depensesbe.services;
+package com.zay.depensesbe.services.users;
 
 
 import com.zay.depensesbe.data.User;

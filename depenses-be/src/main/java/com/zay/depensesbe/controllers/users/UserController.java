@@ -1,9 +1,9 @@
-package com.zay.depensesbe.controllers;
+package com.zay.depensesbe.controllers.users;
 
 
 import com.zay.depensesbe.data.User;
-import com.zay.depensesbe.dto.requests.LoginRequest;
-import com.zay.depensesbe.services.UsersService;
+import com.zay.depensesbe.dto.requests.users.LoginRequest;
+import com.zay.depensesbe.services.users.UsersService;
 import com.zay.depensesbe.utlis.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
