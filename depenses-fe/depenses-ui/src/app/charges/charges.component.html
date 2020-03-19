@@ -1,1 +1,97 @@
-<p>charges works!</p>
+<div class="m-4">
+  <mat-card>
+    <mat-card-header>
+      <div class="example-header-image" mat-card-avatar></div>
+      <mat-card-title><span>Periodic charges</span></mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <table #periodicSort="matSort" [dataSource]="periodicChargesDatasource" class="col-12  table-striped border-primary" mat-table
+             matSort>
+
+        <ng-container matColumnDef="label">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header> Label</th>
+          <td *matCellDef="let row" mat-cell> {{row.label}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="amount">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header> Amount</th>
+          <td *matCellDef="let row" mat-cell> {{row.amount | currency : 'EUR'}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="category">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header> Category</th>
+          <td *matCellDef="let row" mat-cell> {{row.category.code}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="period">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header> Period</th>
+          <td *matCellDef="let row" mat-cell> {{row.period}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="startDate">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header> Start date</th>
+          <td *matCellDef="let row" mat-cell> {{row.startDate | date : dateFormat }} </td>
+        </ng-container>
+        <ng-container matColumnDef="endDate">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header> End date</th>
+          <td *matCellDef="let row" mat-cell> {{row.endDate | date : dateFormat }} </td>
+        </ng-container>
+        <ng-container matColumnDef="active">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header> Active</th>
+          <td *matCellDef="let row" mat-cell> {{row.active}} </td>
+        </ng-container>
+
+        <tr *matHeaderRowDef="periodicChargesDisplayedColumns; sticky: true" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: periodicChargesDisplayedColumns;" mat-row>
+        </tr>
+      </table>
+    </mat-card-content>
+    <mat-card-actions class="fa-align-right">
+      <button class="btn btn-primary" mat-button type="button">
+        <i class="fa fa-plus-square"></i>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+<div class="m-4">
+  <mat-card>
+    <mat-card-header>
+      <div class="example-header-image" mat-card-avatar></div>
+      <mat-card-title><span>One time charges</span></mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <table #oneTimeSort="matSort" [dataSource]="onetimeChargesDatasource" class="col-12  table-striped" mat-table
+             matSort>
+
+        <ng-container matColumnDef="label">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header> Label</th>
+          <td *matCellDef="let row" mat-cell> {{row.label}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="amount">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header> Amount</th>
+          <td *matCellDef="let row" mat-cell> {{row.amount | currency : 'EUR'}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="category">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header> Category</th>
+          <td *matCellDef="let row" mat-cell> {{row.category.code}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="effectDate">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header> Effect date</th>
+          <td *matCellDef="let row" mat-cell> {{row.effectDate | date : dateFormat }} </td>
+        </ng-container>
+
+        <tr *matHeaderRowDef="oneTimeChargesDisplayedColumns; sticky: true" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: oneTimeChargesDisplayedColumns;" mat-row>
+        </tr>
+      </table>
+    </mat-card-content>
+    <mat-card-actions class="fa-align-right">
+      <button class="btn btn-primary" mat-button type="button">
+        <i class="fa fa-plus-square"></i>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

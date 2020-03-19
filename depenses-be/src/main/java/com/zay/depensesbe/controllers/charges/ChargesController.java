@@ -4,6 +4,7 @@ package com.zay.depensesbe.controllers.charges;
 import com.zay.depensesbe.data.charge.Charge;
 import com.zay.depensesbe.dto.requests.charges.CreateChargeRequest;
 import com.zay.depensesbe.dto.requests.charges.FindChargeRequest;
+import com.zay.depensesbe.dto.responses.charges.ChargeDto;
 import com.zay.depensesbe.services.charges.ChargeService;
 import com.zay.depensesbe.utlis.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class ChargesController {
     private ChargeService chargeService;
 
     @PostMapping("/all")
-    ResponseEntity<Collection<Charge>> findAll(@RequestBody FindChargeRequest request){
+    ResponseEntity<Collection<ChargeDto>> findAll(@RequestBody FindChargeRequest request){
         return  new ResponseEntity(this.chargeService.findAll(request.getUserId()), HttpStatus.OK);
     }
 

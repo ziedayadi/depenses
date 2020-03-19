@@ -18,6 +18,9 @@ import { ChargesComponent } from './charges/charges.component';
 import { IncomesComponent } from './incomes/incomes.component';
 import { PlansComponent } from './plans/plans.component';
 import {RouterModule} from '@angular/router';
+import {MatCardModule} from "@angular/material/card";
+import {MatTableModule} from "@angular/material/table";
+import {MatSortModule} from "@angular/material/sort";
 
 
 
@@ -31,7 +34,7 @@ import {RouterModule} from '@angular/router';
     PreviousMonthsComponent,
     ChargesComponent,
     IncomesComponent,
-    PlansComponent
+    PlansComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,7 +45,11 @@ import {RouterModule} from '@angular/router';
     FormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatCardModule,
+    MatTableModule,
+    MatSortModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

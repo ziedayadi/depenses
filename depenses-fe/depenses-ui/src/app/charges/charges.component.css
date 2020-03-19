@@ -1,0 +1,7 @@
+.mat-card-content {
+  max-height: 190px;
+  overflow-y: auto;
+}
+.tr {
+  max-height: 25px;
+}

@@ -9,3 +9,7 @@ export const PREVIOUS_MONTHS = 'history'
 export const CHARGES = 'charges'
 export const INCOMES = 'incomes'
 export const PLANS = 'plans'
+
+
+// Date format
+export const DATE_FORMAT = 'dd-MM-yyyy'
