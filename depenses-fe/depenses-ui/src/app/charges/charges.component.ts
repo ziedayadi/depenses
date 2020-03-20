@@ -2,7 +2,7 @@ import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {LoginService} from "../login/login.service";
 import {Router} from "@angular/router";
 import {MatTableDataSource} from "@angular/material/table";
-import {Charge, ChargeType, CreateNewChargeRequest} from "./models";
+import {Charge, ChargeType, CreateNewChargeRequest, Periods, ChargeCategory} from "./models";
 import {ChargesService} from "./charges.service";
 import {MatSort} from "@angular/material/sort";
 import {DATE_FORMAT} from "../const";
@@ -43,8 +43,8 @@ export class ChargesComponent implements OnInit {
   }
   onCreateNewCharge(){
     const dialogRef = this.dialog.open(CreateNewChargeDialog, {
-      width: '400px',
-      data: {userId: this.loginService.user}
+      width: '600px',
+      data: {userId: this.loginService.user.id}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -84,17 +84,38 @@ export class ChargesComponent implements OnInit {
   selector: 'create-periodic-charge-dialog',
   templateUrl: 'create-new-charge-dialog.html',
 })
-export class CreateNewChargeDialog {
+export class CreateNewChargeDialog implements OnInit  {
 
-  types : String [] =  [ChargeType.PERIODIC , ChargeType.ONE_TIME]
+  types : String [] =  [ChargeType.PERIODIC , ChargeType.ONE_TIME];
+  periods : String [] =  [Periods.WEEK,Periods.MONTH,Periods.YEAR];
+  categories : ChargeCategory[];
 
-  createNewChargeRequest : CreateNewChargeRequest = new CreateNewChargeRequest();
+  createNewChargeRequest : CreateNewChargeRequest ;
   constructor(
     public dialogRef: MatDialogRef<CreateNewChargeDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {}
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private chargesService: ChargesService) {}
 
-  onNoClick(): void {
+    ngOnInit(): void {
+
+      this.createNewChargeRequest = new CreateNewChargeRequest();
+      this.createNewChargeRequest.active = true;
+      this.createNewChargeRequest.userId = this.data.userId;
+
+        this.chargesService.getAllCategories().subscribe(response => {
+          this.categories = response;
+        })
+    }
+
+  onCancel(): void {
     this.dialogRef.close();
+  }
+
+  onSave(){
+    console.log(this.createNewChargeRequest);
+    this.chargesService.createNewCharge(this.createNewChargeRequest).subscribe(response => {
+      this.dialogRef.close();
+    })
   }
 
 }

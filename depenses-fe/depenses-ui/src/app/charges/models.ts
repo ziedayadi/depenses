@@ -3,17 +3,16 @@ export class ChargeType {
   public static ONE_TIME = 'ONE_TIME';
 }
 
+export class Periods{
+  public static WEEK = 'WEEK';
+  public static MONTH = 'MONTH';
+  public static YEAR = 'YEAR';
+}
+
 export interface ChargeCategory {
   id: number;
   code: String;
   label: String;
-}
-
-export class Periods {
-  public static MONTH;
-  public static WEEK;
-  public static YEAR;
-
 }
 
 export interface Charge {
@@ -46,5 +45,5 @@ export class CreateNewChargeRequest {
   period : String;
   startDate : Date;
   endDate : Date;
-  active : boolean ;
+  active : boolean = true;
 }

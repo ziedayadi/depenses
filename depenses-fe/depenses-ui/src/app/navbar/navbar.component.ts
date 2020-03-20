@@ -8,7 +8,7 @@ import {LoginService} from "../login/login.service";
 })
 export class NavbarComponent implements OnInit {
 
-  selectedMenu = "DASHBOARD";
+  selectedMenu = 'DASHBOARD';
   constructor(private loginService: LoginService) {
   }
 
@@ -20,7 +20,7 @@ export class NavbarComponent implements OnInit {
     return this.loginService.user;
   }
 
-  onSelectMenu(menuName : String){
+  onSelectMenu(menuName : string){
     this.selectedMenu = menuName;
   }
 }

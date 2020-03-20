@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -39,5 +40,9 @@ public class ChargeService {
         Optional<User> user = this.usersJpaRepository.findById(request.getUserId());
         Charge charge = ChargeMapper.map(request, category, user);
         return this.chargesJpaRepositories.save(charge);
+    }
+
+    public List<ChargeCategory> getAllChargesCategories(){
+        return this.categoryJpaRepository.findAll();
     }
 }
