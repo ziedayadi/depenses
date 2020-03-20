@@ -44,7 +44,14 @@
         </ng-container>
         <ng-container matColumnDef="active">
           <th *matHeaderCellDef mat-header-cell mat-sort-header> Active</th>
-          <td *matCellDef="let row" mat-cell> {{row.active}} </td>
+          <td *matCellDef="let row" mat-cell>
+              <span *ngIf="row.active">
+                <i class="fa fa-check-square-o"></i>
+              </span>
+              <span *ngIf="!row.active">
+                <i class="fa fa-square-o"></i>
+              </span>
+          </td>
         </ng-container>
 
         <tr *matHeaderRowDef="periodicChargesDisplayedColumns; sticky: true" mat-header-row></tr>

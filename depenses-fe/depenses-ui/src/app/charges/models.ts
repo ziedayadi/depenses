@@ -32,6 +32,8 @@ export interface Charge {
 
 export interface SearchChargesRequest {
   userId: number;
+  startDate : Date;
+  endDate : Date;
 }
 
 export class CreateNewChargeRequest {

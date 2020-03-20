@@ -19,7 +19,9 @@ export class ChargesService {
   public getAllCharges(): Observable<any> {
     let user  = this.loginService.user;
     let request : SearchChargesRequest = {
-      userId : user.id
+      userId : user.id,
+      startDate : null,
+      endDate : null
     }
     return this.http.post(BASE_URI+END_POINT+"/all", request );
   }
@@ -30,5 +32,9 @@ export class ChargesService {
 
   public createNewCharge(request :CreateNewChargeRequest): Observable<any>{
     return this.http.post(BASE_URI+END_POINT+"/new", request );
+  }
+
+  public search(request :SearchChargesRequest): Observable<any>{
+    return this.http.post(BASE_URI+END_POINT+"/search", request );
   }
 }

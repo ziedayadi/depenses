@@ -38,4 +38,11 @@ public class ChargesController {
     ResponseEntity<List<ChargeCategory>> findAllChargesCategories(){
         return new ResponseEntity<>(this.chargeService.getAllChargesCategories(), HttpStatus.OK);
     }
+
+    @PostMapping("/search")
+    ResponseEntity<Collection<ChargeDto>> search(@RequestBody FindChargeRequest request){
+        return  new ResponseEntity(this.chargeService.search(request.getUserId(), request.getStartDate(), request.getEndDate()), HttpStatus.OK);
+    }
+
+
 }

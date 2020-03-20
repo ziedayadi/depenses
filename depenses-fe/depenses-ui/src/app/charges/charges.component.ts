@@ -97,11 +97,7 @@ export class CreateNewChargeDialog implements OnInit  {
     private chargesService: ChargesService) {}
 
     ngOnInit(): void {
-
-      this.createNewChargeRequest = new CreateNewChargeRequest();
-      this.createNewChargeRequest.active = true;
-      this.createNewChargeRequest.userId = this.data.userId;
-
+      this.initCreateNewChargeRequest();
         this.chargesService.getAllCategories().subscribe(response => {
           this.categories = response;
         })
@@ -116,6 +112,23 @@ export class CreateNewChargeDialog implements OnInit  {
     this.chargesService.createNewCharge(this.createNewChargeRequest).subscribe(response => {
       this.dialogRef.close();
     })
+  }
+
+  private initCreateNewChargeRequest(){
+    this.createNewChargeRequest = new CreateNewChargeRequest();
+    this.createNewChargeRequest.active = true;
+    this.createNewChargeRequest.userId = this.data.userId;
+  }
+
+  public getChargeTypeLabel(chargeCode : String) : String {
+    switch (chargeCode) {
+      case ChargeType.ONE_TIME:
+        return 'One time'
+      case ChargeType.PERIODIC :
+      return 'Periodic'
+      default:
+        return null;
+    }
   }
 
 }
