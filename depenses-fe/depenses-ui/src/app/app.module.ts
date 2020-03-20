@@ -14,13 +14,15 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { NavbarComponent } from './navbar/navbar.component';
 import { PreviousMonthsComponent } from './previous-months/previous-months.component';
-import { ChargesComponent } from './charges/charges.component';
+import {ChargesComponent, CreateNewChargeDialog} from './charges/charges.component';
 import { IncomesComponent } from './incomes/incomes.component';
 import { PlansComponent } from './plans/plans.component';
 import {RouterModule} from '@angular/router';
 import {MatCardModule} from "@angular/material/card";
 import {MatTableModule} from "@angular/material/table";
 import {MatSortModule} from "@angular/material/sort";
+import {MatSelectModule} from "@angular/material/select";
+import {MatDialogModule} from "@angular/material/dialog";
 
 
 
@@ -35,6 +37,7 @@ import {MatSortModule} from "@angular/material/sort";
     ChargesComponent,
     IncomesComponent,
     PlansComponent,
+    CreateNewChargeDialog
   ],
   imports: [
     BrowserModule,
@@ -48,7 +51,9 @@ import {MatSortModule} from "@angular/material/sort";
     MatSidenavModule,
     MatCardModule,
     MatTableModule,
-    MatSortModule
+    MatSortModule,
+    MatSelectModule,
+    MatDialogModule
 
   ],
   providers: [],

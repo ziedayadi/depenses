@@ -1,0 +1,17 @@
+<div class="col-12">
+  <div>
+    <h4>New charge</h4>
+  </div>
+  <mat-form-field appearance="fill">
+    <mat-label>Type</mat-label>
+    <mat-select [(ngModel)]="this.createNewChargeRequest.type" name="typeField" ngDefaultControl>
+      <mat-option *ngFor="let t of this.types"
+                  value="option">{{t}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div *ngIf="">
+
+  </div>
+</div>
+
+

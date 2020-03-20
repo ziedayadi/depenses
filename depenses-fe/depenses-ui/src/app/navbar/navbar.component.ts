@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {LoginService} from "../login/login.service";
 
 @Component({
@@ -8,13 +8,19 @@ import {LoginService} from "../login/login.service";
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private loginService : LoginService) { }
+  selectedMenu = "DASHBOARD";
+  constructor(private loginService: LoginService) {
+  }
 
   ngOnInit(): void {
   }
 
 
-  getConnectedUser() : any {
+  getConnectedUser(): any {
     return this.loginService.user;
-}
+  }
+
+  onSelectMenu(menuName : String){
+    this.selectedMenu = menuName;
+  }
 }

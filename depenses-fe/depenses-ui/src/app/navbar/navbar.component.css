@@ -11,3 +11,7 @@ a {
 a:hover {
   color: rgba(255, 255, 255, 1.5);
 }
+
+.selected-menu {
+  color: rgba(255, 255, 255, 1.5);
+}

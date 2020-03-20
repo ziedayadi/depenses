@@ -1,11 +1,12 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {LoginService} from "../login/login.service";
 import {Router} from "@angular/router";
 import {MatTableDataSource} from "@angular/material/table";
-import {Charge, ChargeType} from "./models";
+import {Charge, ChargeType, CreateNewChargeRequest} from "./models";
 import {ChargesService} from "./charges.service";
 import {MatSort} from "@angular/material/sort";
 import {DATE_FORMAT} from "../const";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-charges',
@@ -29,7 +30,8 @@ export class ChargesComponent implements OnInit {
 
   constructor(private loginService : LoginService,
               private chargesService: ChargesService,
-              private router : Router) { }
+              private router : Router,
+              public dialog: MatDialog) { }
 
   ngOnInit(): void {
     if(! this.loginService.user){
@@ -38,6 +40,17 @@ export class ChargesComponent implements OnInit {
     }
 
     this.initData();
+  }
+  onCreateNewCharge(){
+    const dialogRef = this.dialog.open(CreateNewChargeDialog, {
+      width: '400px',
+      data: {userId: this.loginService.user}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.initData();
+    });
+
   }
 
   private initData(){
@@ -64,6 +77,24 @@ export class ChargesComponent implements OnInit {
        };
        this.onetimeChargesDatasource.sort = this.oneTimeSort;
      });
+  }
+
+}
+@Component({
+  selector: 'create-periodic-charge-dialog',
+  templateUrl: 'create-new-charge-dialog.html',
+})
+export class CreateNewChargeDialog {
+
+  types : String [] =  [ChargeType.PERIODIC , ChargeType.ONE_TIME]
+
+  createNewChargeRequest : CreateNewChargeRequest = new CreateNewChargeRequest();
+  constructor(
+    public dialogRef: MatDialogRef<CreateNewChargeDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
 }

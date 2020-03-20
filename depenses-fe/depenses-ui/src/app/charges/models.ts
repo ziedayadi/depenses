@@ -32,5 +32,19 @@ export interface Charge {
 }
 
 export interface SearchChargesRequest {
+  userId: number;
+}
+
+export class CreateNewChargeRequest {
   userId : number;
+  categoryId : number;
+  label : String;
+  description : String;
+  amount : number;
+  type : String;
+  effectDate : Date;
+  period : String;
+  startDate : Date;
+  endDate : Date;
+  active : boolean ;
 }

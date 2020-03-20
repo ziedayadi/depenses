@@ -1,7 +1,21 @@
+.mat-card {
+  padding: 10px;
+}
+
 .mat-card-content {
-  max-height: 190px;
+
   overflow-y: auto;
 }
-.tr {
-  max-height: 25px;
+
+.table{
+  max-height: 190px;
+}
+
+.mat-card-actions{
+ padding: 0px !important;
+}
+tr.mat-row,.mat-header-row {
+  border: 1px solid #e7e7e7;
+  font-weight: bold;
+  height:  15px !important;
 }
