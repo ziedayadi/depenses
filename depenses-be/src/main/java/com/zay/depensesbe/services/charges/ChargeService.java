@@ -89,12 +89,12 @@ public class ChargeService {
     }
 
     private List<Charge> findOneTimeCharges(Long userId, Date startDate, Date endDate) {
-        LOGGER.info("Searching ONE_TIME charges for user between " + startDate + " And " + endDate);
+        LOGGER.info("Searching ONE_TIME charges for user between " + DATE_FORMAT.format(startDate) + " And " + DATE_FORMAT.format(endDate));
         return this.chargesJpaRepositories.findOneTimeChargesByDateAndUser(userId, startDate, endDate);
     }
 
     private List<Charge> findPeriodicCharges(Long userId, Date startDate, Date endDate) {
-        LOGGER.info("Searching PERIODIC charges for user between " + startDate + " And " + endDate);
+        LOGGER.info("Searching PERIODIC charges for user between " + DATE_FORMAT.format(startDate) + " And " + DATE_FORMAT.format(endDate));
 
         List<Charge> entities = this.chargesJpaRepositories.findPeriodicChargesByDateAndUser(userId);
         return entities.stream()
@@ -104,19 +104,19 @@ public class ChargeService {
     }
 
     private boolean isPeriodicChargeExecuted(PeriodicCharge periodicCharge, Date startDate, Date endDate) {
+
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(periodicCharge.getStartDate());
         boolean found = false;
         if (startDate.compareTo(calendar.getTime()) * calendar.getTime().compareTo(endDate) >= 0)
             found = true;
         while (!found && startDate.compareTo(calendar.getTime()) * calendar.getTime().compareTo(endDate) < 0) { // While the calenderDate is NOT between the startDate and the endDate
+            LOGGER.info("SEARCHINg LOOP "+ calendar.getTime());
             incrementDate(calendar, periodicCharge.getPeriod());
-            LOGGER.info("Comparing " + DATE_FORMAT.format(calendar.getTime()) + "To [" + DATE_FORMAT.format(startDate) + " - " + DATE_FORMAT.format(endDate) + "]");
             if (startDate.compareTo(calendar.getTime()) * calendar.getTime().compareTo(endDate) >= 0) {
                 found = true;
             }
         }
-        LOGGER.info("Found: " + found + DATE_FORMAT.format(calendar.getTime()));
         return found;
     }
 
