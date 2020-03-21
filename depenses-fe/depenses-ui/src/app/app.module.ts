@@ -26,6 +26,9 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { ChargeCardComponent } from './charges/charge-card/charge-card.component';
+
 
 
 
@@ -40,7 +43,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     ChargesComponent,
     IncomesComponent,
     PlansComponent,
-    CreateNewChargeDialog
+    CreateNewChargeDialog,
+    ChargeCardComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +63,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatDialogModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatExpansionModule,
 
   ],
   providers: [MatDatepickerModule],

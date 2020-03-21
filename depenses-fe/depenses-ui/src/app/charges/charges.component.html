@@ -24,7 +24,7 @@
           <td *matCellDef="let row" mat-cell> {{row.amount | currency : 'EUR'}}</td>
         </ng-container>
 
-        <ng-container matColumnDef="category">
+      <ng-container matColumnDef="category">
           <th *matHeaderCellDef mat-header-cell mat-sort-header> Category</th>
           <td *matCellDef="let row" mat-cell> {{row.category.code}} </td>
         </ng-container>

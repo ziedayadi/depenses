@@ -1,1 +1,67 @@
-<h3>DASHBOARD</h3>
+<div class="col-12 row">
+  <div class="col-5">
+    <div class="form-group row">
+        <label for="periodSelectField" class="col-sm-3 col-form-label">From: </label>
+        <div class="col-sm-9 row">
+          <div class="col-sm-10">
+          <input name="startDateInputField"
+           class="form-control form-control-sm"
+           [(ngModel)]="fromDate"
+           matInput
+           [matDatepicker]="fromDatePicker">
+          </div>
+          <div class="col-sm-2">
+          <mat-datepicker-toggle class="col-sm-2" matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #fromDatePicker></mat-datepicker>
+          </div>
+        </div>
+    </div>
+  </div>
+  <div class="col-5">
+    <div class="form-group row">
+        <label for="periodSelectField" class="col-sm-3 col-form-label">To: </label>
+        <div class="col-sm-9 row">
+          <div class="col-sm-10">
+          <input name="startDateInputField"
+           class="form-control form-control-sm"
+           [(ngModel)]="toDate"
+           matInput
+           [matDatepicker]="toDatePicker">
+          </div>
+          <div class="col-sm-2">
+          <mat-datepicker-toggle class="col-sm-2" matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #toDatePicker></mat-datepicker>
+          </div>
+        </div>
+    </div>
+  </div>
+  <div class="col-2">
+    <button type="button" class="btn btn-primary" name="button" (click)="onSearch()">Search</button>
+  </div>
+</div>
+<mat-accordion *ngIf="this.periodicCharges">
+  <mat-expansion-panel class="mt-4" [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+      <span class="h4">Peridic Charges</span>
+      </mat-panel-title>
+      <mat-panel-description></mat-panel-description>
+    </mat-expansion-panel-header>
+    <div class="row">
+      <charge-card *ngFor="let c of periodicCharges" class="col-3 mt-2" [charge]="c"></charge-card>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>
+<mat-accordion *ngIf="this.oneTimeCharge">
+  <mat-expansion-panel class="mt-4" [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+      <span class="h4">One time Charges</span>
+      </mat-panel-title>
+      <mat-panel-description></mat-panel-description>
+    </mat-expansion-panel-header>
+    <div class="row">
+      <charge-card *ngFor="let c of oneTimeCharge" class="col-3 mt-2" [charge]="c"></charge-card>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>

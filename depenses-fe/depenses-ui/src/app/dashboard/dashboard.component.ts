@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {LoginService} from "../login/login.service";
 import {Router} from "@angular/router";
 import {ChargesService} from "../charges/charges.service";
-import {SearchChargesRequest,Charge } from "../charges/models";
+import {SearchChargesRequest,Charge,ChargeType } from "../charges/models";
 
 
 
@@ -18,27 +18,30 @@ export class DashboardComponent implements OnInit {
               private router : Router) { }
 
 
-  charges : Charge[];
+  periodicCharges : Charge[];
+  oneTimeCharge : Charge[];
+  fromDate : Date;
+  toDate : Date;
 
   ngOnInit(): void {
    if(! this.loginService.user){
      this.router.navigateByUrl('/');
    }
 
-   // get first date and last date
-   let currentDate = new Date();
-   let startDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
-   let endDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
 
-   let searchRequest : SearchChargesRequest = {
-     userId : this.loginService.user.id,
-     startDate :startDate,
-     endDate : endDate
-   }
+  }
 
-   this.chargesService.search(searchRequest).subscribe(response => {
-     this.charges = response;
-   })
+  onSearch(){
+      let searchRequest : SearchChargesRequest = {
+        userId : this.loginService.user.id,
+        startDate :this.fromDate,
+        endDate : this.toDate
+      }
+
+      this.chargesService.search(searchRequest).subscribe(response => {
+        this.periodicCharges = response.filter(c => c.type == ChargeType.PERIODIC);
+        this.oneTimeCharge = response.filter(c => c.type == ChargeType.ONE_TIME);
+      });
   }
 
 }
