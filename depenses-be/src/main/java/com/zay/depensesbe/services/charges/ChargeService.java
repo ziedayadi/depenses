@@ -110,7 +110,8 @@ public class ChargeService {
         boolean found = false;
         if (startDate.compareTo(calendar.getTime()) * calendar.getTime().compareTo(endDate) >= 0)
             found = true;
-        while (!found && startDate.compareTo(calendar.getTime()) * calendar.getTime().compareTo(endDate) < 0) { // While the calenderDate is NOT between the startDate and the endDate
+        while (!found
+        && calendar.getTime().compareTo(endDate) <=0) { // While the calenderDate is NOT between the startDate and the endDate
             LOGGER.info("SEARCHINg LOOP "+ calendar.getTime());
             incrementDate(calendar, periodicCharge.getPeriod());
             if (startDate.compareTo(calendar.getTime()) * calendar.getTime().compareTo(endDate) >= 0) {

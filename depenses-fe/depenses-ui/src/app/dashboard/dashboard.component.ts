@@ -5,7 +5,6 @@ import {ChargesService} from "../charges/charges.service";
 import {SearchChargesRequest,Charge,ChargeType } from "../charges/models";
 
 
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
