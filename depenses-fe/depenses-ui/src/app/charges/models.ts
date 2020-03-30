@@ -28,6 +28,7 @@ export interface Charge {
   startDate: Date;
   endDate: Date;
   active: boolean;
+  debitDate:Date;
 }
 
 export interface SearchChargesRequest {
