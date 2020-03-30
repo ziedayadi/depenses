@@ -47,6 +47,8 @@ public class ChargeMapper {
         } else if (charge instanceof OneTimeCharge){
             dto.setType(ChargeType.ONE_TIME);
             dto.setEffectDate(((OneTimeCharge) charge).getEffectDate());
+            dto.setDebitDate(((OneTimeCharge) charge).getEffectDate());
+
         } else {
             return null;
         }
@@ -56,7 +58,6 @@ public class ChargeMapper {
         dto.setUserId(charge.getUser().getId());
         dto.setId(charge.getId());
         dto.setLabel(charge.getLabel());
-
         return dto;
 
     }

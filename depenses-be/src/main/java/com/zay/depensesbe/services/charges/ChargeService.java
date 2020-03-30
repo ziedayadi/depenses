@@ -76,49 +76,59 @@ public class ChargeService {
 
     private List<ChargeDto> findByPeriod(Long userId, Date startDate, Date endDate) {
 
-        List<Charge> entities = new ArrayList<>();
+        List<ChargeDto> dtos = new ArrayList<>();
 
         //1. Find OneTime Charges
-        entities.addAll(this.findOneTimeCharges(userId, startDate, endDate));
+        dtos.addAll(this.findOneTimeCharges(userId, startDate, endDate));
 
         //2. Find Periodic charges
-        entities.addAll(this.findPeriodicCharges(userId, startDate, endDate));
+        dtos.addAll(this.findPeriodicCharges(userId, startDate, endDate));
 
-        return entities.stream().map(ChargeMapper::map).collect(Collectors.toList());
+        return dtos;
 
     }
 
-    private List<Charge> findOneTimeCharges(Long userId, Date startDate, Date endDate) {
+    private List<ChargeDto> findOneTimeCharges(Long userId, Date startDate, Date endDate) {
         LOGGER.info("Searching ONE_TIME charges for user between " + DATE_FORMAT.format(startDate) + " And " + DATE_FORMAT.format(endDate));
-        return this.chargesJpaRepositories.findOneTimeChargesByDateAndUser(userId, startDate, endDate);
+        List<Charge> entities = this.chargesJpaRepositories.findOneTimeChargesByDateAndUser(userId, startDate, endDate);
+        return entities.stream().map(ChargeMapper::map).collect(Collectors.toList());
     }
 
-    private List<Charge> findPeriodicCharges(Long userId, Date startDate, Date endDate) {
+    private List<ChargeDto> findPeriodicCharges(Long userId, Date startDate, Date endDate) {
+        LOGGER.info("START SEARCHING FOR PERIODIC CHARGES");
+
         LOGGER.info("Searching PERIODIC charges for user between " + DATE_FORMAT.format(startDate) + " And " + DATE_FORMAT.format(endDate));
 
         List<Charge> entities = this.chargesJpaRepositories.findPeriodicChargesByDateAndUser(userId);
-        return entities.stream()
+        List<ChargeDto> dtos =  entities.stream()
                 .filter(c -> ((PeriodicCharge) c).getEndDate() == null || ((PeriodicCharge) c).getEndDate().after(endDate)) // Filter on end date
-                .filter(c -> isPeriodicChargeExecuted(((PeriodicCharge) c), startDate, endDate))
+                .map(c -> this.getChargeInstance(((PeriodicCharge) c), startDate, endDate))
+                .filter(c -> c !=null)
                 .collect(Collectors.toList());
+        LOGGER.info("END SEARCHING FOR PERIODIC CHARGES");
+
+        return dtos;
     }
 
-    private boolean isPeriodicChargeExecuted(PeriodicCharge periodicCharge, Date startDate, Date endDate) {
+    private ChargeDto getChargeInstance(PeriodicCharge periodicCharge, Date startDate, Date endDate) {
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(periodicCharge.getStartDate());
-        boolean found = false;
-        if (startDate.compareTo(calendar.getTime()) * calendar.getTime().compareTo(endDate) >= 0)
-            found = true;
-        while (!found
-        && calendar.getTime().compareTo(endDate) <=0) { // While the calenderDate is NOT between the startDate and the endDate
-            LOGGER.info("SEARCHINg LOOP "+ calendar.getTime());
+        ChargeDto chargeDto = null;
+        if (startDate.compareTo(calendar.getTime()) * calendar.getTime().compareTo(endDate) >= 0){
+            LOGGER.info("FOUND PERIODIC CHARGE INSTANCE: "+periodicCharge.getLabel()+" AT "+DATE_FORMAT.format(calendar.getTime()));
+            chargeDto = ChargeMapper.map(periodicCharge);
+            chargeDto.setDebitDate(calendar.getTime());
+        }
+        while (chargeDto == null && calendar.getTime().compareTo(endDate) <=0) { // While the calenderDate is NOT between the startDate and the endDate
             incrementDate(calendar, periodicCharge.getPeriod());
             if (startDate.compareTo(calendar.getTime()) * calendar.getTime().compareTo(endDate) >= 0) {
-                found = true;
+                chargeDto = ChargeMapper.map(periodicCharge);
+                chargeDto.setDebitDate(calendar.getTime());
+                LOGGER.info("FOUND PERIODIC CHARGE INSTANCE: "+periodicCharge.getLabel()+" AT "+DATE_FORMAT.format(calendar.getTime()));
             }
         }
-        return found;
+        return chargeDto;
     }
 
 }

@@ -27,4 +27,5 @@ public class ChargeDto {
     private Date startDate;
     private Date endDate;
     private boolean active;
+    private Date debitDate;
 }
