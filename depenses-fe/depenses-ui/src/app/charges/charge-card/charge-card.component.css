@@ -1,3 +1,6 @@
 .card-header{
   padding-left: 3px;
 }
+.card-body {
+  padding: 10px;
+}

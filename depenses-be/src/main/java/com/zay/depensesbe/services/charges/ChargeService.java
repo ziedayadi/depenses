@@ -67,7 +67,7 @@ public class ChargeService {
     }
 
     public List<ChargeCategory> getAllChargesCategories() {
-        return this.categoryJpaRepository.findAll();
+        return this.categoryJpaRepository.findAllByOrderByLabel();
     }
 
     public List<ChargeDto> search(Long userId, Date startDate, Date endDate) {

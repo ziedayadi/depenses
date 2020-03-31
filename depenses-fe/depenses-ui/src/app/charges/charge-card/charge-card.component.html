@@ -11,8 +11,16 @@
   </div>
   <div class="card-body">
     <div>
-      <span>Debit date: </span>
+      <span class="font-weight-light font-italic">Category: </span>
+      <span>{{charge.category.label}}</span>
+    </div>
+    <div>
+      <span class="font-weight-light font-italic">Debit date: </span>
       <span>{{charge.debitDate | date : dateFormat}}</span>
+    </div>
+    <div>
+      <span class="font-weight-light font-italic">Description: </span>
+      <span>{{charge.description}}</span>
     </div>
   </div>
 </div>

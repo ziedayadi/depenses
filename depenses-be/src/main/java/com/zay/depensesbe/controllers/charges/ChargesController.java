@@ -41,6 +41,9 @@ public class ChargesController {
 
     @PostMapping("/search")
     ResponseEntity<Collection<ChargeDto>> search(@RequestBody FindChargeRequest request){
+        if(request.getUserId() == null || request.getStartDate() == null || request.getEndDate() == null){
+            return new ResponseEntity(Constants.TECH_PROBLEM_MESSAGE,HttpStatus.BAD_REQUEST);
+        }
         return  new ResponseEntity(this.chargeService.search(request.getUserId(), request.getStartDate(), request.getEndDate()), HttpStatus.OK);
     }
 

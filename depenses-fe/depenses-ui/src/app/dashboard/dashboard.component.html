@@ -39,13 +39,36 @@
     <button type="button" class="btn btn-primary" name="searchButton" (click)="onSearch()">Search</button>
   </div>
 </div>
+<mat-accordion *ngIf="this.checkedCategories">
+  <mat-expansion-panel class="mt-4" [expanded]="false">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+      <span class="h4">Criteria</span>
+      </mat-panel-title>
+      <br>
+      <mat-panel-description>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div class="row">
+      <div class="col-3">
+        <mat-checkbox  (change)="onAllCategoriesChecked($event)"  [checked]="getAllCategoriesAreChecked()">All</mat-checkbox>
+      </div>
+      <div  *ngFor="let c of this.checkedCategories" class="col-3">
+        <mat-checkbox [(ngModel)]="c.checked">{{c.categoryLabel}}</mat-checkbox>
+      </div>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>
 <mat-accordion *ngIf="this.periodicCharges">
   <mat-expansion-panel class="mt-4" [expanded]="true">
     <mat-expansion-panel-header>
       <mat-panel-title>
       <span class="h4">Peridic Charges</span>
       </mat-panel-title>
-      <mat-panel-description></mat-panel-description>
+      <br>
+      <mat-panel-description>
+          <span>{{getSumPeriodic() | currency : 'EUR' }}</span>
+      </mat-panel-description>
     </mat-expansion-panel-header>
     <div class="row">
       <charge-card *ngFor="let c of periodicCharges" class="col-3 mt-2" [charge]="c"></charge-card>
@@ -58,7 +81,9 @@
       <mat-panel-title>
       <span class="h4">One time Charges</span>
       </mat-panel-title>
-      <mat-panel-description></mat-panel-description>
+      <mat-panel-description>
+          <span>{{getSumOneTime() | currency : 'EUR' }}</span>
+      </mat-panel-description>
     </mat-expansion-panel-header>
     <div class="row">
       <charge-card *ngFor="let c of oneTimeCharge" class="col-3 mt-2" [charge]="c"></charge-card>

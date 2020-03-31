@@ -58,6 +58,7 @@ public class ChargeMapper {
         dto.setUserId(charge.getUser().getId());
         dto.setId(charge.getId());
         dto.setLabel(charge.getLabel());
+        dto.setDescription(charge.getDescription());
         return dto;
 
     }
