@@ -38,6 +38,7 @@ export interface SearchChargesRequest {
 }
 
 export class CreateNewChargeRequest {
+  chargeId : number;
   userId : number;
   categoryId : number;
   label : String;

@@ -16,7 +16,6 @@ export class ChargeCardComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.charge);
 
   }
 

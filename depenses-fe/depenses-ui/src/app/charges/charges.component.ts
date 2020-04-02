@@ -1,4 +1,5 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {FormControl} from '@angular/forms';
 import {LoginService} from "../login/login.service";
 import {Router} from "@angular/router";
 import {MatTableDataSource} from "@angular/material/table";
@@ -20,7 +21,7 @@ export class ChargesComponent implements OnInit {
 
   dateFormat = DATE_FORMAT;
 
-  periodicChargesDisplayedColumns: string[] = ['label', 'amount', 'category', 'period', 'startDate', 'endDate','active'];
+  periodicChargesDisplayedColumns: string[] = ['label', 'amount', 'category', 'period', 'startDate', 'endDate','active','edit'];
   oneTimeChargesDisplayedColumns: string[] = ['label', 'amount', 'category', 'effectDate'];
 
   periodicChargesDatasource : MatTableDataSource<Charge> ;
@@ -42,15 +43,49 @@ export class ChargesComponent implements OnInit {
     this.initData();
   }
   onCreateNewCharge(){
+    let req = new CreateNewChargeRequest();
+    req.userId = this.loginService.user.id;
+
+
     const dialogRef = this.dialog.open(CreateNewChargeDialog, {
       width: '600px',
-      data: {userId: this.loginService.user.id}
+      data: {request: req}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       this.initData();
     });
 
+  }
+
+  /**
+   * onEdit(row)
+    */
+  public onEdit(row) {
+    let req = new CreateNewChargeRequest();
+    req.categoryId = row.category.id;
+    req.chargeId = row.id;
+    req.label = row.label;
+    req.description = row.description;
+    req.amount = row.amount;
+    req.type = row.type;
+    req.effectDate = new Date(row.effectDate);
+    req.period = row.period;
+    req.startDate =  new Date(row.startDate);
+    req.endDate = new Date(row.endDate);
+    req.active = row.active;
+    req.userId = this.loginService.user.id;
+    console.log(req);
+
+    const dialogRef = this.dialog.open(CreateNewChargeDialog, {
+      width: '600px',
+      data: {userId: this.loginService.user.id ,
+            request: req }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.initData();
+    });
   }
 
   private initData(){
@@ -90,6 +125,7 @@ export class CreateNewChargeDialog implements OnInit  {
   periods : String [] =  [Periods.WEEK,Periods.MONTH,Periods.YEAR];
   categories : ChargeCategory[];
 
+
   createNewChargeRequest : CreateNewChargeRequest ;
   constructor(
     public dialogRef: MatDialogRef<CreateNewChargeDialog>,
@@ -97,10 +133,10 @@ export class CreateNewChargeDialog implements OnInit  {
     private chargesService: ChargesService) {}
 
     ngOnInit(): void {
-      this.initCreateNewChargeRequest();
-        this.chargesService.getAllCategories().subscribe(response => {
+      this.createNewChargeRequest = this.data.request;
+      this.chargesService.getAllCategories().subscribe(response => {
           this.categories = response;
-        })
+      })
     }
 
   onCancel(): void {
@@ -108,17 +144,11 @@ export class CreateNewChargeDialog implements OnInit  {
   }
 
   onSave(){
-    console.log(this.createNewChargeRequest);
     this.chargesService.createNewCharge(this.createNewChargeRequest).subscribe(response => {
       this.dialogRef.close();
     })
   }
 
-  private initCreateNewChargeRequest(){
-    this.createNewChargeRequest = new CreateNewChargeRequest();
-    this.createNewChargeRequest.active = true;
-    this.createNewChargeRequest.userId = this.data.userId;
-  }
 
   public getChargeTypeLabel(chargeCode : String) : String {
     switch (chargeCode) {

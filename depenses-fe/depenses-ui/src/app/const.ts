@@ -1,4 +1,4 @@
-export const BASE_URI = 'http://localhost:8080/depenses/'
+export const BASE_URI = 'http://localhost:8080/depenses'
 export const RESULT = 'result'
 export const SUCCESS = 'SUCCESS'
 

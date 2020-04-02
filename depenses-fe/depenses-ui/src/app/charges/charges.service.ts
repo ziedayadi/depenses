@@ -31,7 +31,7 @@ export class ChargesService {
   }
 
   public createNewCharge(request :CreateNewChargeRequest): Observable<any>{
-    return this.http.post(BASE_URI+END_POINT+"/new", request );
+    return this.http.post(BASE_URI+END_POINT+"/save", request );
   }
 
   public search(request :SearchChargesRequest): Observable<any>{

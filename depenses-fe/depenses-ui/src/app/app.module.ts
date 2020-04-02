@@ -28,6 +28,7 @@ import {MatNativeDateModule} from '@angular/material/core';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { ChargeCardComponent } from './charges/charge-card/charge-card.component';
+import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 
 
 
@@ -44,7 +45,8 @@ import { ChargeCardComponent } from './charges/charge-card/charge-card.component
     IncomesComponent,
     PlansComponent,
     CreateNewChargeDialog,
-    ChargeCardComponent
+    ChargeCardComponent,
+    ErrorDialogComponent
   ],
   imports: [
     BrowserModule,

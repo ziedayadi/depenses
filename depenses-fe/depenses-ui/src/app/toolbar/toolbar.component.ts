@@ -15,7 +15,6 @@ export class ToolbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.connectedUser = this.loginService.user;
-    console.log(this.loginService.user)
   }
 
   getUser(): any {

@@ -6,7 +6,7 @@ import com.zay.depensesbe.data.ref.ChargeCategory;
 import com.zay.depensesbe.dto.requests.charges.ChargeType;
 import com.zay.depensesbe.data.charge.OneTimeCharge;
 import com.zay.depensesbe.data.charge.PeriodicCharge;
-import com.zay.depensesbe.dto.requests.charges.CreateChargeRequest;
+import com.zay.depensesbe.dto.requests.charges.SaveChargeRequest;
 import com.zay.depensesbe.dto.responses.charges.ChargeDto;
 
 import java.util.Optional;
@@ -14,7 +14,7 @@ import java.util.Optional;
 public class ChargeMapper {
 
 
-    public static Charge map(CreateChargeRequest request, Optional<ChargeCategory> category, Optional<User> user) {
+    public static Charge map(SaveChargeRequest request, Optional<ChargeCategory> category, Optional<User> user) {
         Charge charge = null;
         if(request.getType().equals(ChargeType.ONE_TIME)){
             charge = new  OneTimeCharge();
@@ -27,6 +27,7 @@ public class ChargeMapper {
             ((PeriodicCharge) charge).setPeriod(request.getPeriod());
         }
 
+        charge.setId(request.getChargeId());
         charge.setLabel(request.getLabel());
         charge.setAmount(request.getAmount());
         charge.setCategory(category.orElse(null));

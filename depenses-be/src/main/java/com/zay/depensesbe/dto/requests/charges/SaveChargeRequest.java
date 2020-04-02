@@ -1,17 +1,14 @@
 package com.zay.depensesbe.dto.requests.charges;
 
 import com.zay.depensesbe.data.period.PeriodTime;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.Date;
 
 
-@NoArgsConstructor
-@Getter
-@Setter
-public class CreateChargeRequest {
+@Data
+public class SaveChargeRequest {
+    private Long chargeId;
     private Long userId;
     private Long categoryId;
     private String label;

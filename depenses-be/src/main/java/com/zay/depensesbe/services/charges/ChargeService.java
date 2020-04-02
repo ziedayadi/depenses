@@ -5,7 +5,7 @@ import com.zay.depensesbe.data.charge.Charge;
 import com.zay.depensesbe.data.charge.PeriodicCharge;
 import com.zay.depensesbe.data.period.PeriodTime;
 import com.zay.depensesbe.data.ref.ChargeCategory;
-import com.zay.depensesbe.dto.requests.charges.CreateChargeRequest;
+import com.zay.depensesbe.dto.requests.charges.SaveChargeRequest;
 import com.zay.depensesbe.dto.responses.charges.ChargeDto;
 import com.zay.depensesbe.mappers.ChargeMapper;
 import com.zay.depensesbe.repositories.UsersJpaRepository;
@@ -59,7 +59,7 @@ public class ChargeService {
                 .collect(Collectors.toList());
     }
 
-    public Charge createCharge(CreateChargeRequest request) {
+    public Charge saveCharge(SaveChargeRequest request) {
         Optional<ChargeCategory> category = this.categoryJpaRepository.findById(request.getCategoryId());
         Optional<User> user = this.usersJpaRepository.findById(request.getUserId());
         Charge charge = ChargeMapper.map(request, category, user);

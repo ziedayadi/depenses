@@ -19,6 +19,12 @@
   box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
 }
 
+.btn-primary:disabled {
+    color: #fff;
+    background-color: #9b59b6;
+    border-color: #9b59b6;
+}
+
 .global-font-style {
   font-family: Roboto;
 }
@@ -40,4 +46,8 @@
   background-color: #343a40 !important;
   text-align: center;
   padding-top: 3px;
+}
+
+.pointer {
+  cursor: pointer;
 }
