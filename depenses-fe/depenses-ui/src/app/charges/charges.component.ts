@@ -22,7 +22,7 @@ export class ChargesComponent implements OnInit {
   dateFormat = DATE_FORMAT;
 
   periodicChargesDisplayedColumns: string[] = ['label', 'amount', 'category', 'period', 'startDate', 'endDate','active','edit'];
-  oneTimeChargesDisplayedColumns: string[] = ['label', 'amount', 'category', 'effectDate'];
+  oneTimeChargesDisplayedColumns: string[] = ['label', 'amount', 'category', 'effectDate','edit','delete'];
 
   periodicChargesDatasource : MatTableDataSource<Charge> ;
   onetimeChargesDatasource : MatTableDataSource<Charge> ;
@@ -86,6 +86,12 @@ export class ChargesComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       this.initData();
     });
+  }
+
+  onDelete(row) {
+    this.chargesService.delete(row.id).subscribe(response => {
+        this.initData();
+    })
   }
 
   private initData(){

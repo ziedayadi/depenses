@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -116,7 +117,6 @@ public class ChargeService {
         calendar.setTime(periodicCharge.getStartDate());
         ChargeDto chargeDto = null;
         if (startDate.compareTo(calendar.getTime()) * calendar.getTime().compareTo(endDate) >= 0){
-            LOGGER.info("FOUND PERIODIC CHARGE INSTANCE: "+periodicCharge.getLabel()+" AT "+DATE_FORMAT.format(calendar.getTime()));
             chargeDto = ChargeMapper.map(periodicCharge);
             chargeDto.setDebitDate(calendar.getTime());
         }
@@ -125,10 +125,13 @@ public class ChargeService {
             if (startDate.compareTo(calendar.getTime()) * calendar.getTime().compareTo(endDate) >= 0) {
                 chargeDto = ChargeMapper.map(periodicCharge);
                 chargeDto.setDebitDate(calendar.getTime());
-                LOGGER.info("FOUND PERIODIC CHARGE INSTANCE: "+periodicCharge.getLabel()+" AT "+DATE_FORMAT.format(calendar.getTime()));
             }
         }
         return chargeDto;
     }
 
+    @Transactional
+    public void deleteCharge(Long chargeId) {
+        this.chargesJpaRepositories.deleteById(chargeId);
+    }
 }

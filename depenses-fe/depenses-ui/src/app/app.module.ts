@@ -29,6 +29,9 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { ChargeCardComponent } from './charges/charge-card/charge-card.component';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import {MatTabsModule} from '@angular/material/tabs';
+import { ChartsComponent } from './dashboard/charts/charts.component'
 
 
 
@@ -46,7 +49,8 @@ import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
     PlansComponent,
     CreateNewChargeDialog,
     ChargeCardComponent,
-    ErrorDialogComponent
+    ErrorDialogComponent,
+    ChartsComponent
   ],
   imports: [
     BrowserModule,
@@ -67,6 +71,8 @@ import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
     MatNativeDateModule,
     MatCheckboxModule,
     MatExpansionModule,
+    MatTabsModule,
+    MDBBootstrapModule.forRoot()
 
   ],
   providers: [MatDatepickerModule],

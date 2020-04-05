@@ -1,7 +1,8 @@
-<div class="col-8 row">
+<div class="ml-3">
+<div class="row col-6">
   <div class="col-6">
-    <div class="form-group row">
-        <label for="periodSelectField" class="col-sm-3 col-form-label">From: </label>
+    <div class="form-group  row">
+        <label for="periodSelectField" class="col-sm-3">From: </label>
         <div class="col-sm-9 row">
           <div class="col-sm-10">
           <input name="startDateInputField"
@@ -19,7 +20,7 @@
   </div>
   <div class="col-6">
     <div class="form-group row">
-        <label for="periodSelectField" class="col-sm-3 col-form-label">To: </label>
+        <label for="periodSelectField" class="col-sm-3">To: </label>
         <div class="col-sm-9 row">
           <div class="col-sm-10">
           <input name="startDateInputField"
@@ -36,29 +37,35 @@
     </div>
   </div>
 </div>
-<div class="col-12">
+<div class="row col-6">
+  <mat-accordion class="col-12" *ngIf="this.checkedCategories">
+    <mat-expansion-panel [expanded]="false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+        <span>Categories</span>
+        </mat-panel-title>
+        <br>
+        <mat-panel-description>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="row">
+        <div class="col-6">
+          <mat-checkbox  (change)="onAllCategoriesChecked($event)"  [checked]="getAllCategoriesAreChecked()">All</mat-checkbox>
+        </div>
+        <div  *ngFor="let c of this.checkedCategories" class="col-6">
+          <mat-checkbox [(ngModel)]="c.checked">{{c.categoryLabel}}</mat-checkbox>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+<div class="mt-2 col-12">
   <button type="button" class="btn btn-primary" [disabled]="!toDate || !fromDate" name="searchButton" (click)="onSearch()">Search</button>
 </div>
-<mat-accordion *ngIf="this.checkedCategories">
-  <mat-expansion-panel class="mt-4" [expanded]="false">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-      <span class="h4">Criteria</span>
-      </mat-panel-title>
-      <br>
-      <mat-panel-description>
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <div class="row">
-      <div class="col-3">
-        <mat-checkbox  (change)="onAllCategoriesChecked($event)"  [checked]="getAllCategoriesAreChecked()">All</mat-checkbox>
-      </div>
-      <div  *ngFor="let c of this.checkedCategories" class="col-3">
-        <mat-checkbox [(ngModel)]="c.checked">{{c.categoryLabel}}</mat-checkbox>
-      </div>
-    </div>
-  </mat-expansion-panel>
-</mat-accordion>
+</div>
+
+<mat-tab-group class="mt-2">
+  <mat-tab label="Charges">
 <mat-accordion *ngIf="this.periodicCharges">
   <mat-expansion-panel class="mt-4" [expanded]="true">
     <mat-expansion-panel-header>
@@ -90,3 +97,8 @@
     </div>
   </mat-expansion-panel>
 </mat-accordion>
+  </mat-tab>
+  <mat-tab label="Overview">
+     <app-charts *ngIf="this.checkedCategories"  [categories] = "this.checkedCategories"></app-charts>
+  </mat-tab>
+</mat-tab-group>

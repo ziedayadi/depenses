@@ -61,5 +61,16 @@ public class ChargesController {
         }
     }
 
+    @DeleteMapping("/delete")
+    public ResponseEntity deleteCharge(@RequestParam("chargeId") Long chargeId){
+        try {
+            this.chargeService.deleteCharge(chargeId);
+            return new ResponseEntity(HttpStatus.OK);
+        } catch (Exception e ){
+            LOGGER.error(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase() , e);
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
 }

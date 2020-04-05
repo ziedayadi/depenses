@@ -34,6 +34,10 @@ export class ChargesService {
     return this.http.post(BASE_URI+END_POINT+"/save", request );
   }
 
+  public delete(chargeId : number):Observable<any>{
+    return this.http.delete(BASE_URI+END_POINT+"/delete?chargeId="+chargeId);
+  }
+
   public search(request :SearchChargesRequest): Observable<any>{
     return this.http.post(BASE_URI+END_POINT+"/search", request );
   }
