@@ -21,13 +21,15 @@ public interface ChargesJpaRepositories extends JpaRepository<Charge, Long> {
             "where c.user.id  = :userId " +
             "and c.effectDate <= :endDate " +
             "and c.effectDate >= :startDate " +
+            "and c.category.code in (:categories)" +
             "order by c.amount desc " )
-    List<Charge> findOneTimeChargesByDateAndUser(Long userId, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
+    List<Charge> findOneTimeChargesByDateAndUser(Long userId, @Param("startDate") Date startDate, @Param("endDate") Date endDate, @Param("categories") List<String> categories);
 
 
     @Query("select c from PeriodicCharge c " +
             "where c.user.id  = :userId " +
+            "and c.category.code in (:categories)"+
             "and c.active = 1 " +
             "order by c.amount desc ")
-    List<Charge>  findPeriodicChargesByDateAndUser(Long userId);
+    List<Charge>  findPeriodicChargesByDateAndUser(@Param("userId")Long userId, @Param("categories") List<String> categories);
 }

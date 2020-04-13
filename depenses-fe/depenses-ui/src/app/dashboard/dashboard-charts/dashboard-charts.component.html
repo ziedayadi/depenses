@@ -1,0 +1,43 @@
+<div class="row m-0">
+<div class="col-6 p-0">
+    <div class="card ">
+        <div class="card-header text-center">
+            <span class="h3">Charges by category</span>
+        </div>
+        <div class="card-body" style="display: block">
+            <canvas (chartClick)="chartClicked($event)"
+                    (chartHover)="chartHovered($event)"
+                    [chartType]="catgeChartType"
+                    [colors]="chartColors"
+                    [datasets]="categoryAmounts"
+                    [labels]="categoryLabels"
+                    [legend]="true"
+                    [options]="chartOptions"
+                    mdbChart>
+            </canvas>
+            <div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="allCharges" class="col-6 p-0">
+    <div class="card">
+        <div class="card-header text-center">
+            <span class="h3">Charges by day</span>
+        </div>
+        <div style="display: block">
+        <canvas mdbChart
+        [chartType]="chargeByDayChartType"
+        [datasets]="chargesByDayData"
+        [labels]="chargesByDayLabels"
+        [colors]="chartColors"
+        [options]="chartOptions"
+        [legend]="true"
+        (chartHover)="chartHovered($event)"
+        (chartClick)="chartClicked($event)">
+        </canvas>
+  </div>
+    </div>
+</div>
+</div>

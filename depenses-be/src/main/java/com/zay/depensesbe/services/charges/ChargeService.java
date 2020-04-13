@@ -11,8 +11,8 @@ import com.zay.depensesbe.mappers.ChargeMapper;
 import com.zay.depensesbe.repositories.UsersJpaRepository;
 import com.zay.depensesbe.repositories.charge.ChargesCategoriesJpaRepository;
 import com.zay.depensesbe.repositories.charge.ChargesJpaRepositories;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @Service
 public class ChargeService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ChargeService.class);
+    private static final Logger LOGGER = Logger.getLogger(ChargeService.class);
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
 
 
@@ -71,36 +71,36 @@ public class ChargeService {
         return this.categoryJpaRepository.findAllByOrderByLabel();
     }
 
-    public List<ChargeDto> search(Long userId, Date startDate, Date endDate) {
-        return this.findByPeriod(userId, startDate, endDate);
+    public List<ChargeDto> search(Long userId, Date startDate, Date endDate, List<String> categories) {
+        return this.findByPeriod(userId, startDate, endDate, categories);
     }
 
-    private List<ChargeDto> findByPeriod(Long userId, Date startDate, Date endDate) {
+    private List<ChargeDto> findByPeriod(Long userId, Date startDate, Date endDate, List<String> categories) {
 
         List<ChargeDto> dtos = new ArrayList<>();
 
         //1. Find OneTime Charges
-        dtos.addAll(this.findOneTimeCharges(userId, startDate, endDate));
+        dtos.addAll(this.findOneTimeCharges(userId, startDate, endDate, categories));
 
         //2. Find Periodic charges
-        dtos.addAll(this.findPeriodicCharges(userId, startDate, endDate));
+        dtos.addAll(this.findPeriodicCharges(userId, startDate, endDate, categories));
 
         return dtos;
 
     }
 
-    private List<ChargeDto> findOneTimeCharges(Long userId, Date startDate, Date endDate) {
+    private List<ChargeDto> findOneTimeCharges(Long userId, Date startDate, Date endDate, List<String> categories) {
         LOGGER.info("Searching ONE_TIME charges for user between " + DATE_FORMAT.format(startDate) + " And " + DATE_FORMAT.format(endDate));
-        List<Charge> entities = this.chargesJpaRepositories.findOneTimeChargesByDateAndUser(userId, startDate, endDate);
+        List<Charge> entities = this.chargesJpaRepositories.findOneTimeChargesByDateAndUser(userId, startDate, endDate, categories);
         return entities.stream().map(ChargeMapper::map).collect(Collectors.toList());
     }
 
-    private List<ChargeDto> findPeriodicCharges(Long userId, Date startDate, Date endDate) {
+    private List<ChargeDto> findPeriodicCharges(Long userId, Date startDate, Date endDate, List<String> categories) {
         LOGGER.info("START SEARCHING FOR PERIODIC CHARGES");
 
         LOGGER.info("Searching PERIODIC charges for user between " + DATE_FORMAT.format(startDate) + " And " + DATE_FORMAT.format(endDate));
 
-        List<Charge> entities = this.chargesJpaRepositories.findPeriodicChargesByDateAndUser(userId);
+        List<Charge> entities = this.chargesJpaRepositories.findPeriodicChargesByDateAndUser(userId, categories);
         List<ChargeDto> dtos =  entities.stream()
                 .filter(c -> ((PeriodicCharge) c).getEndDate() == null || ((PeriodicCharge) c).getEndDate().after(endDate)) // Filter on end date
                 .map(c -> this.getChargeInstance(((PeriodicCharge) c), startDate, endDate))

@@ -1,24 +1,37 @@
 package com.zay.depensesbe.filters;
 
-import com.zay.depensesbe.controllers.charges.ChargesController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import org.apache.log4j.Logger;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
+import java.util.Random;
 
 @Component
 public class MainFilter implements Filter {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MainFilter.class);
+    private static final Logger LOGGER = Logger.getLogger(MainFilter.class);
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
-
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
-        LOGGER.info("["+req.getMethod() + "]\t" +req.getRequestURI());
-        chain.doFilter(servletRequest, servletResponse);
+        HttpServletResponse res = (HttpServletResponse) servletResponse;
+        Random random = new Random();
+        Long reqId = random.nextLong();
+        try {
+
+            LOGGER.info("START [" + req.getMethod() + "] " + req.getRequestURI() + " ("+reqId+")");
+            chain.doFilter(servletRequest, servletResponse);
+            LOGGER.info("END [" + req.getMethod() + "] " + req.getRequestURI() + " ("+reqId+")") ;
+
+        } catch (Exception e){
+            LOGGER.error("ERROR in request "+ reqId);
+            res.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        }
     }
 
     @Override

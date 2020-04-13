@@ -1,1 +1,97 @@
-<p>incomes works!</p>
+<div class="m-4">
+    <div class="row">
+        <div class="col-5">
+            <mat-form-field>
+                <mat-label>From</mat-label>
+                <input [(ngModel)]="findIncomesRequest.from" [matDatepicker]="fromPicker" matInput>
+                <mat-datepicker-toggle [for]="fromPicker" matSuffix></mat-datepicker-toggle>
+                <mat-datepicker #fromPicker></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col-5">
+            <mat-form-field>
+                <mat-label>To</mat-label>
+                <input [(ngModel)]="findIncomesRequest.to" [matDatepicker]="toPicker" matInput>
+                <mat-datepicker-toggle [for]="toPicker" matSuffix></mat-datepicker-toggle>
+                <mat-datepicker #toPicker></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col-2">
+            <button (click)="onSearch()" [disabled]="!findIncomesRequest.to || !findIncomesRequest.from" color="primary"
+                    mdbBtn mdbWavesEffect type="button">Search
+            </button>
+        </div>
+    </div>
+</div>
+<div class="m-4">
+    <table [dataSource]="dataSource" class="col-12" mat-table matSort>
+
+        <ng-container matColumnDef="label">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header> Label</th>
+            <td *matCellDef="let element" mat-cell> {{element.label}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="date">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header> Effect date</th>
+            <td *matCellDef="let element" mat-cell> {{element.effectDate | date : dateFormat }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="amount">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header> Amount</th>
+            <td *matCellDef="let element" mat-cell> {{element.amount | currency : 'EUR'}}</td>
+        </ng-container>
+
+        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>
+<div class="m-4">
+    <div>
+        <button (click)="onNewIncome()" color="primary" mdbBtn mdbWavesEffect type="button">New Income</button>
+    </div>
+</div>
+<div *ngIf="this.createNewIncomeRequest" class="m-4">
+    <form>
+        <div class="md-form form-group mt-2">
+            <input [(ngModel)]="createNewIncomeRequest.label" class="form-control" id="formGroupExampleInputMD" mdbInput
+                   name="newIncomeLabel" placeholder="My salary"
+                   required type="text">
+            <label for="formGroupExampleInputMD">Label</label>
+        </div>
+        <div class="md-form form-group mt-2">
+            <mdb-icon class="prefix" fas icon="pencil-alt"></mdb-icon>
+            <textarea [(ngModel)]="createNewIncomeRequest.description"
+                      class="m-0 md-textarea form-control"
+                      id="form8" mdbInput
+                      name="newIncomeDescription"
+                      placeholder="My Income description"
+                      type="text"></textarea>
+            <label class="m-0" for="form8">Description</label>
+        </div>
+        <div class="md-form form-group mt-2">
+            <input [(ngModel)]="createNewIncomeRequest.amount" class="form-control" id="formGroupExampleInput2MD"
+                   mdbInput name="newIncomeAmount"
+                   placeholder="1000" type="number">
+            <label for="formGroupExampleInput2MD">Amount</label>
+        </div>
+        <div class="md-form form-group mt-2">
+            <mat-form-field>
+                <mat-label>EffectDate</mat-label>
+                <input [(ngModel)]="createNewIncomeRequest.effectDate" [matDatepicker]="effectDate" matInput
+                       name="createNewIncomeEffectDate">
+                <mat-datepicker-toggle [for]="effectDate" matSuffix></mat-datepicker-toggle>
+                <mat-datepicker #effectDate></mat-datepicker>
+            </mat-form-field>
+        </div>
+    </form>
+    <div class="row">
+        <div class="col-3 mr-3">
+            <button (click)="onCancel()" color="danger" mdbBtn mdbWavesEffect type="button">Cancel</button>
+        </div>
+        <div class="col-3 mr-3">
+            <button (click)="onSave()" color="primary" mdbBtn mdbWavesEffect type="button">Save</button>
+        </div>
+    </div>
+</div>

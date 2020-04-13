@@ -31,7 +31,10 @@ import { ChargeCardComponent } from './charges/charge-card/charge-card.component
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import {MatTabsModule} from '@angular/material/tabs';
-import { ChartsComponent } from './dashboard/charts/charts.component'
+import { DashboardChargesComponent } from './dashboard/dashboard-charges/dashboard-charges.component';
+import { DashboardChartsComponent } from './dashboard/dashboard-charts/dashboard-charts.component'
+import { DatePipe } from '@angular/common';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 
 
@@ -50,7 +53,8 @@ import { ChartsComponent } from './dashboard/charts/charts.component'
     CreateNewChargeDialog,
     ChargeCardComponent,
     ErrorDialogComponent,
-    ChartsComponent
+    DashboardChargesComponent,
+    DashboardChartsComponent
   ],
   imports: [
     BrowserModule,
@@ -64,6 +68,7 @@ import { ChartsComponent } from './dashboard/charts/charts.component'
     MatSidenavModule,
     MatCardModule,
     MatTableModule,
+    MatPaginatorModule,
     MatSortModule,
     MatSelectModule,
     MatDialogModule,
@@ -75,7 +80,8 @@ import { ChartsComponent } from './dashboard/charts/charts.component'
     MDBBootstrapModule.forRoot()
 
   ],
-  providers: [MatDatepickerModule],
+  providers: [MatDatepickerModule,
+  DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule {

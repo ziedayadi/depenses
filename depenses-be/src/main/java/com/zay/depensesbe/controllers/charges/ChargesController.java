@@ -8,8 +8,8 @@ import com.zay.depensesbe.dto.requests.charges.FindChargeRequest;
 import com.zay.depensesbe.dto.responses.charges.ChargeDto;
 import com.zay.depensesbe.services.charges.ChargeService;
 import com.zay.depensesbe.utlis.Constants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +22,7 @@ import java.util.List;
 @RequestMapping(Constants.BASE_URI + "/charges")
 @CrossOrigin
 public class ChargesController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ChargesController.class);
+    private static final Logger LOGGER = Logger.getLogger(ChargesController.class);
 
     @Autowired
     private ChargeService chargeService;
@@ -52,7 +52,8 @@ public class ChargesController {
             ResponseEntity<Collection<ChargeDto>> result =   new ResponseEntity(this.chargeService.search(
                     request.getUserId(),
                     request.getStartDate(),
-                    request.getEndDate()),
+                    request.getEndDate(),
+                    request.getCategories()),
                     HttpStatus.OK);
             return result;
         } catch (Exception e){

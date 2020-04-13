@@ -21,7 +21,7 @@ export class ChargesComponent implements OnInit {
 
   dateFormat = DATE_FORMAT;
 
-  periodicChargesDisplayedColumns: string[] = ['label', 'amount', 'category', 'period', 'startDate', 'endDate','active','edit'];
+  periodicChargesDisplayedColumns: string[] = ['label', 'amount', 'category', 'period', 'startDate', 'endDate','active','edit','delete'];
   oneTimeChargesDisplayedColumns: string[] = ['label', 'amount', 'category', 'effectDate','edit','delete'];
 
   periodicChargesDatasource : MatTableDataSource<Charge> ;

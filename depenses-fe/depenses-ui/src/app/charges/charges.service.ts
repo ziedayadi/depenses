@@ -5,7 +5,8 @@ import {BASE_URI} from "../const";
 import {Observable} from "rxjs";
 import {Charge, SearchChargesRequest, CreateNewChargeRequest} from "./models";
 
-export const     END_POINT = '/charges';
+export const     CHARGES_END_POINT = '/charges';
+export const     CHARTS_END_POINT = '/charts';
 
 @Injectable({
   providedIn: 'root'
@@ -21,24 +22,29 @@ export class ChargesService {
     let request : SearchChargesRequest = {
       userId : user.id,
       startDate : null,
-      endDate : null
+      endDate : null,
+      categories : []
     }
-    return this.http.post(BASE_URI+END_POINT+"/all", request );
+    return this.http.post(BASE_URI+CHARGES_END_POINT+"/all", request );
   }
 
   public getAllCategories(): Observable<any> {
-    return this.http.get(BASE_URI+END_POINT+"/categories");
+    return this.http.get(BASE_URI+CHARGES_END_POINT+"/categories");
   }
 
   public createNewCharge(request :CreateNewChargeRequest): Observable<any>{
-    return this.http.post(BASE_URI+END_POINT+"/save", request );
+    return this.http.post(BASE_URI+CHARGES_END_POINT+"/save", request );
   }
 
   public delete(chargeId : number):Observable<any>{
-    return this.http.delete(BASE_URI+END_POINT+"/delete?chargeId="+chargeId);
+    return this.http.delete(BASE_URI+CHARGES_END_POINT+"/delete?chargeId="+chargeId);
   }
 
   public search(request :SearchChargesRequest): Observable<any>{
-    return this.http.post(BASE_URI+END_POINT+"/search", request );
+    return this.http.post(BASE_URI+CHARGES_END_POINT+"/search", request );
+  }
+
+  public searchCategoriesChartsData(request :SearchChargesRequest): Observable<any>{
+    return this.http.post(BASE_URI+CHARTS_END_POINT+"/categories", request );
   }
 }

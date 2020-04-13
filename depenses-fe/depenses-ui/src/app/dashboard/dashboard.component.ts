@@ -21,9 +21,12 @@ export class DashboardComponent implements OnInit {
 
   periodicCharges : Charge[];
   oneTimeCharge : Charge[];
+  allCharges : Charge[];
   checkedCategories : CheckedCategory[];
   fromDate : Date;
   toDate : Date;
+
+  catChartData : any;
 
   ngOnInit(): void {
    if(! this.loginService.user){
@@ -44,27 +47,26 @@ export class DashboardComponent implements OnInit {
   }
 
   onSearch(){
+    let checkedCategoriesIds = this.checkedCategories.filter(cat => cat.checked).map(cat => cat.categoryCode);
       let searchRequest : SearchChargesRequest = {
         userId : this.loginService.user.id,
         startDate :this.fromDate,
-        endDate : this.toDate
+        endDate : this.toDate,
+        categories : checkedCategoriesIds
       }
 
       this.chargesService.search(searchRequest).subscribe(response => {
+        this.allCharges = response;
         this.periodicCharges = response.filter(c => c.type == ChargeType.PERIODIC);
         this.oneTimeCharge = response.filter(c => c.type == ChargeType.ONE_TIME);
       }, err => this.openErrorDialog(err) )
+
+      this.chargesService.searchCategoriesChartsData(searchRequest).subscribe(response => {
+        this.catChartData = response;
+      })
     }
 
-   getSumPeriodic() : number{
-     let sum =  this.getCheckedPeriodicCharges().map(ch => ch.amount).reduce((a,b) => a+b , 0);
-     return sum;
-   }
 
-   getSumOneTime() : number{
-     let sum =  this.oneTimeCharge.map(ch => ch.amount).reduce((a,b) => a+b , 0);
-     return sum;
-   }
 
    getAllCategoriesAreChecked() : boolean {
      return this.checkedCategories.map(c => c.checked).reduce((a,b)=> a && b );
@@ -90,9 +92,8 @@ export class DashboardComponent implements OnInit {
    }
 
    public getCheckedPeriodicCharges(){
-     return this.periodicCharges.filter(ch => this.isCategoryCheched(ch.category));
+     return this.periodicCharges;
    }
-
 }
 
 export class CheckedCategory {

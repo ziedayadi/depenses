@@ -1,18 +1,16 @@
 package com.zay.depensesbe.dto.requests.charges;
 
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 public class FindChargeRequest {
 
     private Long userId;
     private Date startDate;
     private Date endDate;
+    private List<String> categories;
 }
